@@ -38,9 +38,9 @@ class MacthTest {
     }
     @Test
     void creerMatchDansLigueTest(){
-        ligue.creerMatch(match1);
-        ligue.creerMatch(match2);
-        ligue.creerMatch(match3);
+        ligue.creerMatch(match1);//ajout d'un match amical
+        ligue.creerMatch(match2);// ajout d'un match officiel
+        ligue.creerMatch(match3);// ajout d'un match pour un titre
         List<Match> listeMatches = new ArrayList<>();
         listeMatches.add(match1);
         listeMatches.add(match2);
@@ -50,9 +50,9 @@ class MacthTest {
 
     @Test
     void testListerMatchCombattant(){
-        ligue.creerMatch(match1);
-        ligue.creerMatch(match2);
-        ligue.creerMatch(match3);
+        ligue.creerMatch(match1);//match sans Rakoto
+        ligue.creerMatch(match2);//match avec Rakoto
+        ligue.creerMatch(match3);//match avec Rakoto
         List<Match> matchesDeRakoto = new ArrayList<>();
         matchesDeRakoto.add(match2);
         matchesDeRakoto.add(match3);
@@ -74,13 +74,14 @@ class MacthTest {
     @Test
     void terminerMatchOfficielTest(){
         match2.combattant1GagnerPoint();
-        assertEquals(match2.terminerMatch(), Rakoto);
+        assertEquals(match2.terminerMatch(), Rakoto);//retourne le vainqueur pour pouvoir tester
     }
 
     @Test
     void testPalmaresMatchAmical(){
         match1.combattant1GagnerPoint();
         match1.terminerMatch();
+        //pas de changement de palmarès dans les matchs amicaux
         assertEquals(0, Rasoa.getPalmares().get(PalmaresTypes.victoires));
         assertEquals(0, Ranaivo.getPalmares().get(PalmaresTypes.victoires));
         assertEquals(0, Rasoa.getPalmares().get(PalmaresTypes.defaites));
@@ -93,6 +94,7 @@ class MacthTest {
     void testPalmaresMatchOfficiel(){
         match2.combattant1GagnerPoint();
         match2.terminerMatch();
+        //une victoire pour Rakoto 1 défaite pour Rabe
         assertEquals(1, Rakoto.getPalmares().get(PalmaresTypes.victoires));
         assertEquals(0, Rabe.getPalmares().get(PalmaresTypes.victoires));
         assertEquals(0, Rakoto.getPalmares().get(PalmaresTypes.defaites));
@@ -106,6 +108,7 @@ class MacthTest {
         match2.combattant1GagnerPoint();
         match2.combattant2GagnerPoint();
         match2.terminerMatch();
+        //équalité
         assertEquals(0, Rakoto.getPalmares().get(PalmaresTypes.victoires));
         assertEquals(0, Rabe.getPalmares().get(PalmaresTypes.victoires));
         assertEquals(0, Rakoto.getPalmares().get(PalmaresTypes.defaites));
@@ -118,8 +121,21 @@ class MacthTest {
     void gagnerTitreTest(){
         match3.combattant2GagnerPoint();
         match3.terminerMatch();
+        //Rasoa gagne le titre, Rakoto ne gagne rien
         assertEquals(1, Rasoa.getTitres().size());
         assertEquals("champion du monde", Rasoa.getTitres().getFirst());
         assertEquals(0, Rakoto.getTitres().size());
+    }
+
+    @Test
+    void gagnerPlusieursTitreTest(){
+        match3.combattant2GagnerPoint();
+        match3.terminerMatch();
+        match3.combattant2GagnerPoint();
+        match3.terminerMatch();
+        //Rasoa gagne deux fois le même titre, le même combat
+        assertEquals(2, Rasoa.getTitres().size());
+        assertEquals("champion du monde", Rasoa.getTitres().getFirst());
+        assertEquals("champion du monde", Rasoa.getTitres().getLast());
     }
 }
