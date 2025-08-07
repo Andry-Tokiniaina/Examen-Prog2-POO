@@ -36,6 +36,28 @@ class MacthTest {
          match3 = new MatchTitre("003",LocalDate.of(2025,2,15),
                  "Tanjombato", Rakoto, Rasoa, "champion du monde");
     }
+    @Test
+    void creerMatchDansLigueTest(){
+        ligue.creerMatch(match1);
+        ligue.creerMatch(match2);
+        ligue.creerMatch(match3);
+        List<Match> listeMatches = new ArrayList<>();
+        listeMatches.add(match1);
+        listeMatches.add(match2);
+        listeMatches.add(match3);
+        assertEquals(ligue.getMatches(),listeMatches);
+    }
+
+    @Test
+    void testListerMatchCombattant(){
+        ligue.creerMatch(match1);
+        ligue.creerMatch(match2);
+        ligue.creerMatch(match3);
+        List<Match> matchesDeRakoto = new ArrayList<>();
+        matchesDeRakoto.add(match2);
+        matchesDeRakoto.add(match3);
+        assertEquals(matchesDeRakoto,ligue.listerMatchesCombattant(Rakoto));
+    }
 
     @Test
     void ajouterPointsCombattant1Test(){
@@ -80,10 +102,24 @@ class MacthTest {
     }
 
     @Test
+    void testPalmaresEgalitesMatchAmical(){
+        match2.combattant1GagnerPoint();
+        match2.combattant2GagnerPoint();
+        match2.terminerMatch();
+        assertEquals(0, Rakoto.getPalmares().get(PalmaresTypes.victoires));
+        assertEquals(0, Rabe.getPalmares().get(PalmaresTypes.victoires));
+        assertEquals(0, Rakoto.getPalmares().get(PalmaresTypes.defaites));
+        assertEquals(0, Rabe.getPalmares().get(PalmaresTypes.defaites));
+        assertEquals(1, Rakoto.getPalmares().get(PalmaresTypes.egalites));
+        assertEquals(1, Rabe.getPalmares().get(PalmaresTypes.egalites));
+    }
+
+    @Test
     void gagnerTitreTest(){
         match3.combattant2GagnerPoint();
         match3.terminerMatch();
         assertEquals(1, Rasoa.getTitres().size());
-        assertEquals("champion du monde", Rasoa.getTitres().get(0));
+        assertEquals("champion du monde", Rasoa.getTitres().getFirst());
+        assertEquals(0, Rakoto.getTitres().size());
     }
 }
