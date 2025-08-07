@@ -33,4 +33,8 @@ public class Ligue {
     public List<Match> getMatches(){
         return this.matches;
     }
+
+    public List<Combattant> getCombattants(){
+        return this.combattants;
+    }
 }

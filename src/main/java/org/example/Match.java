@@ -29,5 +29,12 @@ public abstract class Match {
         this.pointsCombattant2++;
     }
 
-    public abstract void terminerMatch();
+    public int getPointsCombattant1(){
+        return this.pointsCombattant1;
+    }
+    public int getPointsCombattant2(){
+        return this.pointsCombattant2;
+    }
+
+    public abstract Combattant terminerMatch();
 }

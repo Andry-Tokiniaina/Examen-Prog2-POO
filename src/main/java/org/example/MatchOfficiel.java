@@ -10,18 +10,21 @@ public class MatchOfficiel extends Match{
     }
 
     @Override
-    public void terminerMatch() {
-        if (Objects.equals(pointsCombattant1, pointsCombattant2)){
+    public Combattant terminerMatch() {
+        if (pointsCombattant1 == pointsCombattant2){
             combattant1.ajouterEgalite();
             combattant2.ajouterEgalite();
+            return null;
         }
         else if (pointsCombattant1<pointsCombattant2){
             combattant1.ajouterDefaite();
             combattant2.ajouterVictoire();
+            return combattant2;
         }
         else {
             combattant2.ajouterDefaite();
             combattant1.ajouterVictoire();
+            return combattant1;
         }
     }
 }

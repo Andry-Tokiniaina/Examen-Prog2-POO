@@ -24,15 +24,6 @@ public class Combattant {
         this.titres = new ArrayList<String>();
     }
 
-    public Combattant(String id, String nom, String prenom, double poids) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.poids = poids;
-        this.palmares = new HashMap<PalmaresTypes, Integer>(PalmaresTypes.class.getModifiers());
-        this.palmares.put(PalmaresTypes.victoires,0);
-    }
-
     public void ajouterVictoire(){
         this.palmares.put(PalmaresTypes.victoires,this.palmares.get(PalmaresTypes.victoires) + 1);
     }
@@ -41,6 +32,14 @@ public class Combattant {
     }
     public void ajouterEgalite(){
         this.palmares.put(PalmaresTypes.egalites,this.palmares.get(PalmaresTypes.egalites) + 1);
+    }
+
+    public List<String> getTitres(){
+        return this.titres;
+    }
+
+    public Map<PalmaresTypes, Integer> getPalmares(){
+        return this.palmares;
     }
 
     public void gagnerTitre(String titre){

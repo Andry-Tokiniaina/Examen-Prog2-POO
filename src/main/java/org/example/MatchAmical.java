@@ -9,6 +9,15 @@ public class MatchAmical extends Match{
     }
 
     @Override
-    public void terminerMatch(){
+    public Combattant terminerMatch(){
+        if (this.pointsCombattant1<this.pointsCombattant2){
+            return this.combattant2;
+        }
+        else  if (this.pointsCombattant1>this.pointsCombattant2){
+            return this.combattant1;
+        }
+        else {
+            return null;
+        }
     }
 }
